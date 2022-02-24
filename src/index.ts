@@ -1,9 +1,13 @@
-import canvas2d from "./demos/canvas2d";
-import webgl from "./demos/webgl";
+import canvas2dStyle from "./demos/canvas2dStyle";
+import webglStyle from "./demos/webglStyle";
+import canvas2dLayer from "./demos/canvas2dLayer";
+import webglLayer from "./demos/webglLayer";
 
 const demos = {
-  canvas2d,
-  webgl
+  canvas2dStyle,
+  webglStyle,
+  canvas2dLayer,
+  webglLayer
 };
 
 const params = new URLSearchParams(window.location.search);
