@@ -1,17 +1,17 @@
 import Graphic from "@arcgis/core/Graphic";
-import { IQuery, IVisualData, IVisualState, IWebGLStyle } from "../interfaces";
+import { IVisualQuery, IVisualData, IVisualState, IVisualStyle } from "../interfaces";
 
 class MyWebGLData implements IVisualData {
   destroy(): void {
   }
 }
 
-export default class MyWebGLStyle implements IWebGLStyle<MyWebGLData> {
+export default class MyWebGLStyle implements IVisualStyle<WebGLRenderingContext, MyWebGLData> {
   constructor(private _graphics: Graphic[]) {
     console.log(this._graphics);
   }
 
-  async load(_query: IQuery): Promise<MyWebGLData> {
+  async load(_query: IVisualQuery): Promise<MyWebGLData> {
     return new MyWebGLData();
   }
   

@@ -30,7 +30,7 @@ class MyWebGLLayerView2D extends BaseLayerViewGL2D {
     }
 
     const visualState: IVisualState = {
-      translation: [0, 0],
+      position: [0, 0],
       rotation: 0,
       scale: 1,
       size: renderParameters.state.size
