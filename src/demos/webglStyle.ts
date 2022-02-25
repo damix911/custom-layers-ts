@@ -4,12 +4,11 @@ import { IQuery, IVisualState } from "../interfaces";
 import Extent from "@arcgis/core/geometry/Extent";
 
 export default async function (): Promise<void> {
-  const viewDiv = document.getElementById("viewDiv")!;
   const canvas = document.createElement("canvas");
   canvas.style.border = "1px solid black";
   canvas.width = 640;
   canvas.height = 360;
-  viewDiv.appendChild(canvas);
+  document.body.appendChild(canvas);
   const gl = canvas.getContext("webgl")!;
 
   const resolution = 10000;

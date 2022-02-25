@@ -4,6 +4,10 @@ import MyWebGLLayer from "../layers/MyWebGLLayer";
 import Graphic from "@arcgis/core/Graphic";
 
 export default function (): void {
+  const container = document.createElement("div");
+  container.id = "viewDiv";
+  document.body.appendChild(container);
+
   const layer = new MyWebGLLayer();
 
   const map = new EsriMap({
@@ -12,7 +16,7 @@ export default function (): void {
   });
   
   const view = new MapView({
-    container: "viewDiv",
+    container,
     map: map,
     center: [-100, 40],
     zoom: 3
