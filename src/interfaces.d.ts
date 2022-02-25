@@ -15,7 +15,7 @@ export interface IState {
 }
 
 export interface IData<C = void> {
-  refresh?(context: C): void;
+  update?(context: C): void;
   unload?(): void;
 }
 
