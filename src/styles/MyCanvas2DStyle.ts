@@ -15,7 +15,12 @@ export default class MyCanvas2DStyle implements ICanvas2DStyle<MyCanvas2DData> {
     return new MyCanvas2DData();
   }
   
-  render(ctx: CanvasRenderingContext2D, _state: IVisualState, _data: MyCanvas2DData): void {
+  render(ctx: CanvasRenderingContext2D, state: IVisualState, _data: MyCanvas2DData): void {
+    ctx.resetTransform();
+    ctx.translate(state.translation[0], state.translation[1]);
+    ctx.rotate(state.rotation);
+    ctx.scale(state.scale, state.scale);
+    
     ctx.fillStyle = "red";
     ctx.fillRect(200 - 4, 100 - 4, 8, 8);
 
