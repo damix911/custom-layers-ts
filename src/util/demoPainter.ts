@@ -1,7 +1,7 @@
-import { IVisualQuery, IVisualState, IVisualStyle } from "../interfaces";
+import { IQuery, IState, IPainter } from "../interfaces";
 import Extent from "@arcgis/core/geometry/Extent";
 
-export default async function demoStyle<C, D>(style: IVisualStyle<C, D>, createContext: (width: number, height: number) => C, preRender: (context: C) => void): Promise<void> {
+export default async function demoPainter<C, D>(painter: IPainter<C, D>, createContext: (width: number, height: number) => C, preRender: (context: C) => void): Promise<void> {
   const width = 640;
   const height = 360;
   const context = createContext(width, height);
@@ -17,13 +17,14 @@ export default async function demoStyle<C, D>(style: IVisualStyle<C, D>, createC
     }
   });
   const size: [number, number] = [width, height];
-  const query: IVisualQuery = {
+  const pixelRatio = 1;
+  const query: IQuery = {
     extent,
     size,
-    pixelRatio: 1
+    pixelRatio
   };
   
-  const data = await style.load(query);
+  const data = await painter.load(query);
 
   function render(): void {
     const time = performance.now() / 1000;
@@ -50,15 +51,16 @@ export default async function demoStyle<C, D>(style: IVisualStyle<C, D>, createC
         break;
     }
 
-    const state: IVisualState = {
+    const state: IState = {
       position,
       rotation,
       scale,
-      size
+      size,
+      pixelRatio
     };
   
     preRender(context);
-    style.render(context, state, data);
+    painter.render(context, state, data);
   }
 
   function frame(): void {

@@ -4,13 +4,13 @@ import Layer from "@arcgis/core/layers/Layer";
 import { subclass, property } from "@arcgis/core/core/accessorSupport/decorators";
 import Graphic from "@arcgis/core/Graphic";
 import { watch } from "@arcgis/core/core/reactiveUtils";
-import MyWebGLStyle from "../styles/MyWebGLStyle";
-import { IVisualState } from "../interfaces";
+import MyWebGLPainter from "../painters/MyWebGLPainter";
+import { IState } from "../interfaces";
 
 @subclass("layers.MyWebGLLayerView2D")
 class MyWebGLLayerView2D extends BaseLayerViewGL2D {
   private _handle: IHandle | null = null;
-  private _style: MyWebGLStyle | null = null;
+  private _painter: MyWebGLPainter | null = null;
 
   constructor(properties: { layer: Layer, view: MapView }) {
     super(properties);
@@ -18,25 +18,26 @@ class MyWebGLLayerView2D extends BaseLayerViewGL2D {
 
   override attach(): void {
     this._handle = watch(() => (this.layer as any).graphics, (value) => {
-      this._style = new MyWebGLStyle(value);
+      this._painter = new MyWebGLPainter(value);
     }, { initial: true });
   }
 
   override render(renderParameters: any): void {
     const { context: gl } = renderParameters;
 
-    if (!this._style) {
+    if (!this._painter) {
       return;
     }
 
-    const visualState: IVisualState = {
+    const visualState: IState = {
       position: [0, 0],
       rotation: 0,
       scale: 1,
-      size: renderParameters.state.size
+      size: renderParameters.state.size,
+      pixelRatio: 1 // TODO
     };
 
-    this._style.render(gl, visualState, null as any);
+    this._painter.render(gl, visualState, null as any);
   }
 
   override detach(): void {

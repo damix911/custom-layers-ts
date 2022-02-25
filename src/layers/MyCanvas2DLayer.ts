@@ -4,14 +4,14 @@ import Layer from "@arcgis/core/layers/Layer";
 import { subclass, property } from "@arcgis/core/core/accessorSupport/decorators";
 import Graphic from "@arcgis/core/Graphic";
 import { watch } from "@arcgis/core/core/reactiveUtils";
-import MyCanvas2DStyle from "../styles/MyCanvas2DStyle";
-import { IVisualQuery, IVisualState } from "../interfaces";
+import MyCanvas2DPainter from "../painters/MyCanvas2DPainter";
+import { IQuery, IState } from "../interfaces";
 import Extent from "@arcgis/core/geometry/Extent";
 
 @subclass("layers.MyCanvas2DLayerView")
 class MyCanvas2DLayerView extends BaseLayerView2D {
   private _handle: IHandle | null = null;
-  private _style: MyCanvas2DStyle | null = null;
+  private _painter: MyCanvas2DPainter | null = null;
   private _data: any = null;
 
   constructor(properties: { layer: Layer, view: MapView }) {
@@ -20,7 +20,7 @@ class MyCanvas2DLayerView extends BaseLayerView2D {
 
   override attach(): void {
     this._handle = watch(() => (this.layer as any).graphics, (value) => {
-      this._style = new MyCanvas2DStyle(value);
+      this._painter = new MyCanvas2DPainter(value);
 
       // TODO! Real extent and life cycle.
       const resolution = 10000;
@@ -34,12 +34,12 @@ class MyCanvas2DLayerView extends BaseLayerView2D {
         }
       });
       const size: [number, number] = [640, 360];
-      const query: IVisualQuery = {
+      const query: IQuery = {
         extent,
         size,
         pixelRatio: 1
       };
-      this._style.load(query).then((d) => {
+      this._painter.load(query).then((d) => {
         this._data = d;
       });
     }, { initial: true });
@@ -48,18 +48,19 @@ class MyCanvas2DLayerView extends BaseLayerView2D {
   override render(renderParameters: any): void {
     const { context: ctx } = renderParameters;
 
-    if (!this._style || !this._data) {
+    if (!this._painter || !this._data) {
       return;
     }
 
-    const visualState: IVisualState = {
+    const visualState: IState = {
       position: [0, 0],
       rotation: 0,
       scale: 1,
-      size: renderParameters.state.size
+      size: renderParameters.state.size,
+      pixelRatio: 1 // TODO
     };
 
-    this._style.render(ctx, visualState, this._data);
+    this._painter.render(ctx, visualState, this._data);
   }
 
   override detach(): void {

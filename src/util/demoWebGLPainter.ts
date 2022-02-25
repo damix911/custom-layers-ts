@@ -1,8 +1,8 @@
-import { IVisualData, IVisualStyle } from "../interfaces";
+import { IPainter } from "../interfaces";
 import { defined } from "./assert";
-import demoStyle from "./demoStyle";
+import demoPainter from "./demoPainter";
 
-export default function demoWebGLStyle<D extends IVisualData>(style: IVisualStyle<WebGLRenderingContext, D>): void {
+export default function demoWebGLPainter<D>(painter: IPainter<WebGLRenderingContext, D>): void {
   function createContext(): WebGLRenderingContext {
     const canvas = document.createElement("canvas");
     canvas.style.border = "1px solid black";
@@ -19,5 +19,5 @@ export default function demoWebGLStyle<D extends IVisualData>(style: IVisualStyl
     gl.clear(gl.COLOR_BUFFER_BIT);
   }
 
-  demoStyle(style, createContext, preRender)
+  demoPainter(painter, createContext, preRender)
 }

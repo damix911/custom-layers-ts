@@ -1,11 +1,11 @@
-import canvas2dStyle from "./demos/canvas2dStyle";
-import webglStyle from "./demos/webglStyle";
+import canvas2dPainter from "./demos/canvas2dPainter";
+import webglPainter from "./demos/webglPainter";
 import canvas2dLayer from "./demos/canvas2dLayer";
 import webglLayer from "./demos/webglLayer";
 
 const demos = {
-  canvas2dStyle,
-  webglStyle,
+  canvas2dPainter,
+  webglPainter,
   canvas2dLayer,
   webglLayer
 };

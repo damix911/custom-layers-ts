@@ -1,18 +1,18 @@
 import Graphic from "@arcgis/core/Graphic";
 import Point from "@arcgis/core/geometry/Point";
-import { IVisualData, IVisualQuery, IVisualState, IVisualStyle } from "../interfaces";
+import { IQuery, IState, IPainter } from "../interfaces";
 import { defined } from "../util/assert";
 import quantizeGraphics from "../util/quantizeGraphics";
 
-interface IMyVisualData extends IVisualData {
+interface IMyData {
   coords: Float32Array;
 }
 
-export default class MyCanvas2DStyle implements IVisualStyle<CanvasRenderingContext2D, IMyVisualData> {
+export default class MyCanvas2DPainter implements IPainter<CanvasRenderingContext2D, IMyData> {
   constructor(private _graphics: Graphic[]) {
   }
 
-  async load(query: IVisualQuery): Promise<IMyVisualData> {
+  async load(query: IQuery): Promise<IMyData> {
     const quantized = await quantizeGraphics(this._graphics, query.extent, query.size);
     const coords = new Float32Array(quantized.length * 2);
     
@@ -25,8 +25,11 @@ export default class MyCanvas2DStyle implements IVisualStyle<CanvasRenderingCont
 
     return { coords };
   }
+
+  unload(_data: IMyData): void {
+  }
   
-  render(ctx: CanvasRenderingContext2D, state: IVisualState, data: IMyVisualData): void {
+  render(ctx: CanvasRenderingContext2D, state: IState, data: IMyData): void {
     ctx.translate(state.position[0], state.position[1]);
     ctx.rotate(state.rotation);
     ctx.scale(state.scale, state.scale);

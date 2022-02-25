@@ -1,8 +1,8 @@
-import { IVisualData, IVisualStyle } from "../interfaces";
+import { IPainter } from "../interfaces";
 import { defined } from "./assert";
-import demoStyle from "./demoStyle";
+import demoPainter from "./demoPainter";
 
-export default function demoCanvas2DStyle<D extends IVisualData>(style: IVisualStyle<CanvasRenderingContext2D, D>): void {
+export default function demoCanvas2DPainter<D>(painter: IPainter<CanvasRenderingContext2D, D>): void {
   function createContext(): CanvasRenderingContext2D {
     const canvas = document.createElement("canvas");
     canvas.style.border = "1px solid black";
@@ -19,5 +19,5 @@ export default function demoCanvas2DStyle<D extends IVisualData>(style: IVisualS
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   }
 
-  demoStyle(style, createContext, preRender)
+  demoPainter(painter, createContext, preRender)
 }

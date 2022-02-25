@@ -1,22 +1,23 @@
 import Graphic from "@arcgis/core/Graphic";
-import { IVisualQuery, IVisualData, IVisualState, IVisualStyle } from "../interfaces";
+import { IQuery, IState, IPainter } from "../interfaces";
 
-class MyWebGLData implements IVisualData {
-  destroy(): void {
-  }
+interface IMyData {
 }
 
-export default class MyWebGLStyle implements IVisualStyle<WebGLRenderingContext, MyWebGLData> {
+export default class MyWebGLPainter implements IPainter<WebGLRenderingContext, IMyData> {
   constructor(private _graphics: Graphic[]) {
     // TODO. Remove this.
     console.log(this._graphics);
   }
 
-  async load(_query: IVisualQuery): Promise<MyWebGLData> {
-    return new MyWebGLData();
+  async load(_query: IQuery): Promise<IMyData> {
+    return {};
+  }
+
+  unload(_data: IMyData): void {
   }
   
-  render(gl: WebGLRenderingContext, state: IVisualState, _data: MyWebGLData): void {
+  render(gl: WebGLRenderingContext, state: IState, _data: IMyData): void {
     gl.enable(gl.SCISSOR_TEST);
     gl.clearColor(0, 1, 0, 1);
 
