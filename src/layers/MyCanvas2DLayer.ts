@@ -4,9 +4,9 @@ import Layer from "@arcgis/core/layers/Layer";
 import { subclass, property } from "@arcgis/core/core/accessorSupport/decorators";
 import Graphic from "@arcgis/core/Graphic";
 import { watch } from "@arcgis/core/core/reactiveUtils";
-import MyCanvas2DPainter from "../painters/MyCanvas2DPainter";
 import { IQuery, IState } from "../interfaces";
 import Extent from "@arcgis/core/geometry/Extent";
+import MyCanvas2DPainter from "../painters/MyCanvas2DPainter";
 
 @subclass("layers.MyCanvas2DLayerView")
 class MyCanvas2DLayerView extends BaseLayerView2D {

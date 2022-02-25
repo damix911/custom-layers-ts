@@ -14,9 +14,6 @@ export default class MyWebGLPainter implements IPainter<WebGLRenderingContext, I
     return {};
   }
 
-  unload(_data: IMyData): void {
-  }
-  
   render(gl: WebGLRenderingContext, state: IState, _data: IMyData): void {
     gl.enable(gl.SCISSOR_TEST);
     gl.clearColor(0, 1, 0, 1);

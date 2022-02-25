@@ -14,8 +14,12 @@ export interface IState {
   pixelRatio: number;
 }
 
-export interface IPainter<C, D> {
+export interface IData<C = void> {
+  refresh?(context: C): void;
+  unload?(): void;
+}
+
+export interface IPainter<C, D extends IData> {
   load(query: IQuery): Promise<D>;
-  unload(data: D): void;
   render(context: C, state: IState, data: D): void;
 }

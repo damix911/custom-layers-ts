@@ -4,8 +4,8 @@ import Layer from "@arcgis/core/layers/Layer";
 import { subclass, property } from "@arcgis/core/core/accessorSupport/decorators";
 import Graphic from "@arcgis/core/Graphic";
 import { watch } from "@arcgis/core/core/reactiveUtils";
-import MyWebGLPainter from "../painters/MyWebGLPainter";
 import { IState } from "../interfaces";
+import MyWebGLPainter from "../painters/MyWebGLPainter";
 
 @subclass("layers.MyWebGLLayerView2D")
 class MyWebGLLayerView2D extends BaseLayerViewGL2D {
