@@ -5,12 +5,14 @@ import { subclass, property } from "@arcgis/core/core/accessorSupport/decorators
 import Graphic from "@arcgis/core/Graphic";
 import { watch } from "@arcgis/core/core/reactiveUtils";
 import MyCanvas2DStyle from "../styles/MyCanvas2DStyle";
-import { IVisualState } from "../interfaces";
+import { IVisualQuery, IVisualState } from "../interfaces";
+import Extent from "@arcgis/core/geometry/Extent";
 
 @subclass("layers.MyCanvas2DLayerView")
 class MyCanvas2DLayerView extends BaseLayerView2D {
   private _handle: IHandle | null = null;
   private _style: MyCanvas2DStyle | null = null;
+  private _data: any = null;
 
   constructor(properties: { layer: Layer, view: MapView }) {
     super(properties);
@@ -18,14 +20,35 @@ class MyCanvas2DLayerView extends BaseLayerView2D {
 
   override attach(): void {
     this._handle = watch(() => (this.layer as any).graphics, (value) => {
-      this._style = new MyCanvas2DStyle(value)
-    });
+      this._style = new MyCanvas2DStyle(value);
+
+      // TODO! Real extent and life cycle.
+      const resolution = 10000;
+      const extent = new Extent({
+        xmin: -11131949.08 - 0.5 * 640 * resolution,
+        ymin: 4865942.28 - 0.5 * 360 * resolution,
+        xmax: -11131949.08 + 0.5 * 640 * resolution,
+        ymax: 4865942.28 + 0.5 * 360 * resolution,
+        spatialReference: {
+          wkid: 3857
+        }
+      });
+      const size: [number, number] = [640, 360];
+      const query: IVisualQuery = {
+        extent,
+        size,
+        pixelRatio: 1
+      };
+      this._style.load(query).then((d) => {
+        this._data = d;
+      });
+    }, { initial: true });
   }
 
   override render(renderParameters: any): void {
     const { context: ctx } = renderParameters;
 
-    if (!this._style) {
+    if (!this._style || !this._data) {
       return;
     }
 
@@ -36,7 +59,7 @@ class MyCanvas2DLayerView extends BaseLayerView2D {
       size: renderParameters.state.size
     };
 
-    this._style.render(ctx, visualState, null as any);
+    this._style.render(ctx, visualState, this._data);
   }
 
   override detach(): void {

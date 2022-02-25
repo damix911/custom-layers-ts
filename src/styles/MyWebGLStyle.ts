@@ -8,6 +8,7 @@ class MyWebGLData implements IVisualData {
 
 export default class MyWebGLStyle implements IVisualStyle<WebGLRenderingContext, MyWebGLData> {
   constructor(private _graphics: Graphic[]) {
+    // TODO. Remove this.
     console.log(this._graphics);
   }
 

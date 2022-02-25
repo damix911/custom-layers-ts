@@ -18,8 +18,8 @@ class MyWebGLLayerView2D extends BaseLayerViewGL2D {
 
   override attach(): void {
     this._handle = watch(() => (this.layer as any).graphics, (value) => {
-      this._style = new MyWebGLStyle(value)
-    });
+      this._style = new MyWebGLStyle(value);
+    }, { initial: true });
   }
 
   override render(renderParameters: any): void {

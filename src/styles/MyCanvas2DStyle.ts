@@ -2,6 +2,7 @@ import Graphic from "@arcgis/core/Graphic";
 import Point from "@arcgis/core/geometry/Point";
 import { IVisualData, IVisualQuery, IVisualState, IVisualStyle } from "../interfaces";
 import { defined } from "../util/assert";
+import quantizeGraphics from "../util/quantizeGraphics";
 
 interface IMyVisualData extends IVisualData {
   coords: Float32Array;
@@ -12,13 +13,16 @@ export default class MyCanvas2DStyle implements IVisualStyle<CanvasRenderingCont
   }
 
   async load(query: IVisualQuery): Promise<IMyVisualData> {
-    const filtered = this._graphics.filter((graphic) => graphic.geometry.type === "point" && query.extent.intersects(graphic.geometry));
-    const coords = new Float32Array(filtered.length * 2);
+    const quantized = await quantizeGraphics(this._graphics, query.extent, query.size);
+    const coords = new Float32Array(quantized.length * 2);
+    
     let i = 0;
-    for (const graphic of filtered) {
+    
+    for (const graphic of quantized) {
       coords[i++] = (graphic.geometry as Point).x;
       coords[i++] = (graphic.geometry as Point).y;
     }
+
     return { coords };
   }
   
@@ -30,7 +34,7 @@ export default class MyCanvas2DStyle implements IVisualStyle<CanvasRenderingCont
     for (let i = 0; i < data.coords.length; i += 2) {
       const x = data.coords[i];
       defined(x);
-      const y = data.coords[i];
+      const y = data.coords[i + 1];
       defined(y);
 
       ctx.fillStyle = "red";

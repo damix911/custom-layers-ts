@@ -8,10 +8,10 @@ export default async function demoStyle<C, D>(style: IVisualStyle<C, D>, createC
 
   const resolution = 10000;
   const extent = new Extent({
-    xmin: -0.5 * width * resolution,
-    xmax: +0.5 * width * resolution,
-    ymin: -0.5 * height * resolution,
-    ymax: +0.5 * height * resolution,
+    xmin: -11131949.08 - 0.5 * width * resolution,
+    ymin: 4865942.28 - 0.5 * height * resolution,
+    xmax: -11131949.08 + 0.5 * width * resolution,
+    ymax: 4865942.28 + 0.5 * height * resolution,
     spatialReference: {
       wkid: 3857
     }
@@ -22,7 +22,7 @@ export default async function demoStyle<C, D>(style: IVisualStyle<C, D>, createC
     size,
     pixelRatio: 1
   };
-
+  
   const data = await style.load(query);
 
   function render(): void {
@@ -43,7 +43,7 @@ export default async function demoStyle<C, D>(style: IVisualStyle<C, D>, createC
         position[1] = 100 * Math.sin(cycle);
         break;
       case 2:
-        rotation = Math.sin(cycle);
+        rotation = 0.2 * Math.sin(cycle);
         break;
       case 3:
         scale = 1 + 0.5 * Math.sin(cycle);
