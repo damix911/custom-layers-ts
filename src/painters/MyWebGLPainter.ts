@@ -1,5 +1,5 @@
 import Graphic from "@arcgis/core/Graphic";
-import { IQuery, IState, IPainter } from "../interfaces";
+import { IQuery, IRenderState, IPainter } from "../interfaces";
 
 interface IMyData {
 }
@@ -14,7 +14,7 @@ export default class MyWebGLPainter implements IPainter<WebGLRenderingContext, I
     return {};
   }
 
-  render(gl: WebGLRenderingContext, state: IState, _data: IMyData): void {
+  render(gl: WebGLRenderingContext, state: IRenderState, _data: IMyData): void {
     gl.enable(gl.SCISSOR_TEST);
     gl.clearColor(0, 1, 0, 1);
 

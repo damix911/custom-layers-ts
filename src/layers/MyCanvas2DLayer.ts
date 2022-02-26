@@ -4,7 +4,7 @@ import Layer from "@arcgis/core/layers/Layer";
 import { subclass, property } from "@arcgis/core/core/accessorSupport/decorators";
 import Graphic from "@arcgis/core/Graphic";
 import { watch } from "@arcgis/core/core/reactiveUtils";
-import { IQuery, IState } from "../interfaces";
+import { IQuery, IRenderState } from "../interfaces";
 import Extent from "@arcgis/core/geometry/Extent";
 import MyCanvas2DPainter from "../painters/MyCanvas2DPainter";
 
@@ -52,7 +52,7 @@ class MyCanvas2DLayerView extends BaseLayerView2D {
       return;
     }
 
-    const visualState: IState = {
+    const visualState: IRenderState = {
       position: [0, 0],
       rotation: 0,
       scale: 1,

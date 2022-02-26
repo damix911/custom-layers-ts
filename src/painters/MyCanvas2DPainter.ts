@@ -1,6 +1,6 @@
 import Graphic from "@arcgis/core/Graphic";
 import Point from "@arcgis/core/geometry/Point";
-import { IQuery, IState, IPainter, IData } from "../interfaces";
+import { IQuery, IRenderState, IPainter, IData } from "../interfaces";
 import { defined } from "../util/assert";
 import quantizeGraphics from "../util/quantizeGraphics";
 
@@ -26,7 +26,7 @@ export default class MyCanvas2DPainter implements IPainter<CanvasRenderingContex
     return { coords };
   }
 
-  render(ctx: CanvasRenderingContext2D, state: IState, data: IMyData): void {
+  render(ctx: CanvasRenderingContext2D, state: IRenderState, data: IMyData): void {
     ctx.translate(state.position[0], state.position[1]);
     ctx.rotate(state.rotation);
     ctx.scale(state.scale, state.scale);

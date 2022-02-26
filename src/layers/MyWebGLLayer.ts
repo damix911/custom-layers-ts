@@ -4,7 +4,7 @@ import Layer from "@arcgis/core/layers/Layer";
 import { subclass, property } from "@arcgis/core/core/accessorSupport/decorators";
 import Graphic from "@arcgis/core/Graphic";
 import { watch } from "@arcgis/core/core/reactiveUtils";
-import { IState } from "../interfaces";
+import { IRenderState } from "../interfaces";
 import MyWebGLPainter from "../painters/MyWebGLPainter";
 
 @subclass("layers.MyWebGLLayerView2D")
@@ -29,7 +29,7 @@ class MyWebGLLayerView2D extends BaseLayerViewGL2D {
       return;
     }
 
-    const visualState: IState = {
+    const visualState: IRenderState = {
       position: [0, 0],
       rotation: 0,
       scale: 1,

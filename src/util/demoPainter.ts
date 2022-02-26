@@ -1,4 +1,4 @@
-import { IQuery, IState, IPainter, IData } from "../interfaces";
+import { IQuery, IRenderState, IPainter, IData } from "../interfaces";
 import Extent from "@arcgis/core/geometry/Extent";
 
 export default async function demoPainter<C, D extends IData>(painter: IPainter<C, D>, createContext: (width: number, height: number) => C, preRender: (context: C) => void): Promise<void> {
@@ -51,7 +51,7 @@ export default async function demoPainter<C, D extends IData>(painter: IPainter<
         break;
     }
 
-    const state: IState = {
+    const state: IRenderState = {
       position,
       rotation,
       scale,
