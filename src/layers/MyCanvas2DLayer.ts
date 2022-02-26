@@ -19,7 +19,7 @@ class MyCanvas2DLayerView extends BaseLayerView2D {
   }
 
   override attach(): void {
-    this._handle = watch(() => (this.layer as any).graphics, (value) => {
+    this._handle = watch(() => (this.layer as MyCanvas2DLayer).graphics, (value) => {
       this._painter = new MyCanvas2DPainter(value);
 
       // TODO! Real extent and life cycle.
@@ -73,7 +73,7 @@ class MyCanvas2DLayerView extends BaseLayerView2D {
 
 @subclass("layers.MyCanvas2DLayer")
 export default class MyCanvas2DLayer extends Layer {
-  override async createLayerView(view: any): Promise<__esri.LayerView> {
+  override async createLayerView(view: __esri.MapView): Promise<__esri.LayerView> {
     return new MyCanvas2DLayerView({ layer: this, view });
   }
 

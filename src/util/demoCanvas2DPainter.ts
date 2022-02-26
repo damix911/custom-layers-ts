@@ -1,8 +1,8 @@
-import { IPainter } from "../interfaces";
+import { IData, IPainter } from "../interfaces";
 import { defined } from "./assert";
 import demoPainter from "./demoPainter";
 
-export default function demoCanvas2DPainter<D>(painter: IPainter<CanvasRenderingContext2D, D>): void {
+export default function demoCanvas2DPainter<D extends IData>(painter: IPainter<CanvasRenderingContext2D, D>): void {
   function createContext(): CanvasRenderingContext2D {
     const canvas = document.createElement("canvas");
     canvas.style.border = "1px solid black";

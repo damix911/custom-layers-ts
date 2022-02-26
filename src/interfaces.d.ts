@@ -6,7 +6,7 @@ export interface IQuery {
   pixelRatio: number;
 }
 
-export interface IState {
+export interface IRenderState {
   position: [number, number];
   rotation: number;
   scale: number;
@@ -21,5 +21,5 @@ export interface IData<C = void> {
 
 export interface IPainter<C, D extends IData> {
   load(query: IQuery): Promise<D>;
-  render(context: C, state: IState, data: D): void;
+  render(context: C, state: IRenderState, data: D): void;
 }

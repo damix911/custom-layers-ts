@@ -50,7 +50,7 @@ class MyWebGLLayerView2D extends BaseLayerViewGL2D {
 
 @subclass("layers.MyWebGLLayer")
 export default class MyWebGLLayer extends Layer {
-  override async createLayerView(view: any): Promise<__esri.LayerView> {
+  override async createLayerView(view: __esri.MapView): Promise<__esri.LayerView> {
     return new MyWebGLLayerView2D({ layer: this, view });
   }
 

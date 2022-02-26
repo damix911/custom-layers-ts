@@ -1,8 +1,8 @@
-import { IPainter } from "../interfaces";
+import { IData, IPainter } from "../interfaces";
 import { defined } from "./assert";
 import demoPainter from "./demoPainter";
 
-export default function demoWebGLPainter<D>(painter: IPainter<WebGLRenderingContext, D>): void {
+export default function demoWebGLPainter<D extends IData>(painter: IPainter<WebGLRenderingContext, D>): void {
   function createContext(): WebGLRenderingContext {
     const canvas = document.createElement("canvas");
     canvas.style.border = "1px solid black";
